@@ -1,0 +1,250 @@
+:root {
+    --primary: #0071e3;
+    --primary-dark: #0062c4;
+    --secondary: #86868b;
+    --success: #34c759;
+    --error: #ff3b30;
+    --background: #f5f5f7;
+    --card: #ffffff;
+    --text: #1d1d1f;
+    --border: #d2d2d7;
+    --radius: 12px;
+    --shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 布局样式 */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding: 1rem;
+}
+
+.tagline {
+    color: var(--secondary);
+}
+
+.main-content {
+    flex: 1;
+}
+
+/* 上传区域 */
+.upload-area {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 2rem;
+    text-align: center;
+    border: 2px dashed var(--border);
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    border-color: var(--primary);
+}
+
+.upload-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.file-requirements {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--secondary);
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 2rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-dark);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+}
+
+.btn-convert {
+    background: var(--success);
+    color: white;
+    display: block;
+    width: 100%;
+    margin-top: 1.5rem;
+    padding: 1rem;
+}
+
+.btn-download-all {
+    background: var(--primary);
+    color: white;
+    width: 100%;
+    margin-top: 1rem;
+}
+
+/* 预览区域 */
+.preview-section, .result-section {
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-top: 1rem;
+}
+
+.preview-header, .result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.preview-grid, .result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.preview-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+}
+
+.preview-name {
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.preview-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: var(--secondary);
+    margin-top: 0.5rem;
+}
+
+.remove-btn {
+    background: none;
+    border: none;
+    color: var(--error);
+    cursor: pointer;
+}
+
+/* 转换选项 */
+.conversion-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.option-group select {
+    padding: 0.5rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+/* 结果区域 */
+.result-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+}
+
+.download-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    padding: 0.5rem;
+    width: 100%;
+    margin-top: 0.5rem;
+    cursor: pointer;
+}
+
+/* 加载遮罩 */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.loading-content {
+    background: var(--card);
+    padding: 2rem;
+    border-radius: var(--radius);
+    text-align: center;
+    max-width: 300px;
+    width: 90%;
+}
+
+.spinner {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    animation: spin 1s linear infinite;
+}
+
+.progress-container {
+    height: 6px;
+    background: #eee;
+    border-radius: 3px;
+    margin: 1rem 0;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    transition: width 0.3s ease;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .preview-grid, .result-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .conversion-options {
+        grid-template-columns: 1fr;
+    }
+      }
