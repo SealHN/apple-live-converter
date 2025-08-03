@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple 实况照片转换器</title>
+    <style>
+        /* 内联关键CSS避免闪屏 */
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #f5f5f7;
+            color: #1d1d1f;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📱 Apple 实况照片转换器</h1>
+            <p class="tagline">将照片+视频转换为实况照片 (Live Photo)</p>
+        </header>
+
+        <main class="main-content">
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📤</div>
+                <h2>拖放文件到此处</h2>
+                <p>或</p>
+                <button class="btn btn-primary" id="selectFiles">选择文件</button>
+                <input type="file" id="fileInput" accept="image/*,video/*" multiple style="display:none;">
+                <div class="file-requirements">
+                    <p>✅ 支持: JPEG/PNG/HEIC + MP4/MOV</p>
+                    <p>❌ 限制: 单个文件≤50MB</p>
+                </div>
+            </div>
+
+            <div class="preview-section hidden" id="previewSection">
+                <div class="preview-header">
+                    <h2>📁 已选文件 (<span id="fileCount">0</span>)</h2>
+                    <button class="btn btn-secondary" id="clearFiles">清除全部</button>
+                </div>
+                <div class="preview-grid" id="previewGrid"></div>
+                <div class="conversion-options">
+                    <div class="option-group">
+                        <label for="duration">实况时长:</label>
+                        <select id="duration">
+                            <option value="1.5">1.5秒</option>
+                            <option value="3" selected>3秒</option>
+                            <option value="4.5">4.5秒</option>
+                        </select>
+                    </div>
+                    <div class="option-group">
+                        <label for="format">输出格式:</label>
+                        <select id="format">
+                            <option value="heic">HEIC+MOV</option>
+                            <option value="jpeg">JPEG+MOV</option>
+                        </select>
+                    </div>
+                </div>
+                <button class="btn btn-convert" id="convertBtn">
+                    🪄 开始转换
+                </button>
+            </div>
+
+            <div class="result-section hidden" id="resultSection">
+                <div class="result-header">
+                    <h2>✅ 转换完成!</h2>
+                    <button class="btn btn-secondary" id="newConversion">新的转换</button>
+                </div>
+                <div class="result-grid" id="resultGrid"></div>
+                <button class="btn btn-download-all" id="downloadAll">
+                    ⬇️ 下载全部
+                </button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2023 Apple实况转换器 | 非官方工具</p>
+        </footer>
+    </div>
+
+    <div class="loading-overlay hidden" id="loadingOverlay">
+        <div class="loading-content">
+            <div class="spinner">⏳</div>
+            <p id="loadingText">处理中...</p>
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/file-handler.js"></script>
+    <script src="scripts/feedback.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+  </html>
