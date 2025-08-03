@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const previewSection = document.getElementById('previewSection');
     const resultSection = document.getElementById('resultSection');
     const fileInput = document.getElementById('fileInput');
-    const selectFilesBtn = document.getElementById('selectFiles');
     const previewGrid = document.getElementById('previewGrid');
     const clearFilesBtn = document.getElementById('clearFiles');
     const convertBtn = document.getElementById('convertBtn');
@@ -19,43 +18,41 @@ document.addEventListener('DOMContentLoaded', () => {
     const newConversionBtn = document.getElementById('newConversion');
     const fileCountEl = document.getElementById('fileCount');
 
-    // 事件监听
-    selectFilesBtn.addEventListener('click', () => fileInput.click());
-    fileInput.addEventListener('change', handleFileSelect);
-    uploadArea.addEventListener('dragover', handleDragOver);
-    uploadArea.addEventListener('dragleave', handleDragLeave);
-    uploadArea.addEventListener('drop', handleDrop);
-    clearFilesBtn.addEventListener('click', clearFiles);
-    convertBtn.addEventListener('click', convertFiles);
-    downloadAllBtn.addEventListener('click', downloadAll);
-    newConversionBtn.addEventListener('click', startNewConversion);
-
     // 文件选择处理
-    async function handleFileSelect(e) {
-        const files = e.target.files;
-        if (!files.length) return;
-        await processFiles(files);
-        fileInput.value = '';
-    }
+    fileInput.addEventListener('change', async function(e) {
+        if (this.files && this.files.length > 0) {
+            try {
+                await processFiles(this.files);
+                this.value = ''; // 重置以便重复选择相同文件
+            } catch (error) {
+                console.error('文件处理错误:', error);
+                feedback.showError('文件处理失败');
+            }
+        }
+    });
 
     // 拖放处理
-    function handleDragOver(e) {
+    uploadArea.addEventListener('dragover', function(e) {
         e.preventDefault();
-        uploadArea.style.borderColor = '#0071e3';
-        uploadArea.style.background = 'rgba(0,113,227,0.05)';
-    }
+        this.style.borderColor = '#0071e3';
+        this.style.background = 'rgba(0,113,227,0.05)';
+    });
 
-    function handleDragLeave(e) {
+    uploadArea.addEventListener('dragleave', function(e) {
         e.preventDefault();
-        uploadArea.style.borderColor = '';
-        uploadArea.style.background = '';
-    }
+        this.style.borderColor = '';
+        this.style.background = '';
+    });
 
-    async function handleDrop(e) {
+    uploadArea.addEventListener('drop', async function(e) {
         e.preventDefault();
-        handleDragLeave(e);
-        await processFiles(e.dataTransfer.files);
-    }
+        this.style.borderColor = '';
+        this.style.background = '';
+        
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            await processFiles(e.dataTransfer.files);
+        }
+    });
 
     // 处理文件
     async function processFiles(files) {
@@ -111,15 +108,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 清除文件
-    function clearFiles() {
+    clearFilesBtn.addEventListener('click', function() {
         fileHandler.clearFiles();
         previewSection.classList.add('hidden');
         uploadArea.classList.remove('hidden');
         feedback.showSuccess('已清除所有文件');
-    }
+    });
 
     // 转换文件
-    async function convertFiles() {
+    convertBtn.addEventListener('click', async function() {
         const files = fileHandler.getFiles();
         if (!files.length) {
             feedback.showError('请先添加文件');
@@ -140,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         previewSection.classList.add('hidden');
         resultSection.classList.remove('hidden');
         feedback.hideLoading();
-    }
+    });
 
     // 显示结果
     function showResults() {
@@ -170,19 +167,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 下载全部
-    function downloadAll() {
+    downloadAllBtn.addEventListener('click', function() {
         const buttons = document.querySelectorAll('.download-btn');
         if (!buttons.length) {
             feedback.showError('没有可下载的文件');
             return;
         }
         buttons.forEach(btn => btn.click());
-    }
+    });
 
     // 新的转换
-    function startNewConversion() {
+    newConversionBtn.addEventListener('click', function() {
         fileHandler.clearFiles();
         resultSection.classList.add('hidden');
         uploadArea.classList.remove('hidden');
-    }
+    });
 });
