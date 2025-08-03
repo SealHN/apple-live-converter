@@ -69,6 +69,8 @@
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
 }
 
 .btn-primary {
@@ -247,4 +249,4 @@
     .conversion-options {
         grid-template-columns: 1fr;
     }
-      }
+}
